@@ -10,3 +10,5 @@ __pycache__/
 # Configuración de editores
 .vscode/
 .idea/
+
+test.py
