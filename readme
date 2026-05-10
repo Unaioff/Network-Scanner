@@ -1,0 +1,14 @@
+# Network-Scanner 🚧
+
+> ⚠️ **Proyecto en desarrollo**⚠️
+>
+> Esta herramienta se encuentra actualmente en fase de desarrollo. Algunas funcionalidades pueden estar incompletas, cambiar en futuras versiones o presentar errores.
+
+**Network-Scanner** es una herramienta desarrollada en Python cuyo objetivo es realizar tareas de reconocimiento activo en redes. Incluye funcionalidades como:
+
+- Escaneo de puertos
+- Descubrimiento de hosts
+- Identificación de servicios
+- Otras utilidades de análisis de red
+
+Esta herramienta está orientada a facilitar el análisis y la enumeración de dispositivos y servicios disponibles en una red.
