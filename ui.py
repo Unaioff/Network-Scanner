@@ -1,6 +1,7 @@
-import customtkinter
+import customtkinter as ctk
 
-class App(customtkinter.CTk):
+
+class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
@@ -17,14 +18,36 @@ class App(customtkinter.CTk):
 
 
         #=======[ SEARCH ENTRY - IP HOST DESCOVERY ]=======
-        self.SearchEntry = customtkinter.CTkEntry( self, placeholder_text="Ejemplo: 192.168.0.0")
-        self.SearchEntry.grid(row=0, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+        # Frame contenedor
+        self.ToolBarFrame = ctk.CTkFrame(self)
+        self.ToolBarFrame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
+        # Entry
+        self.SearchEntry = ctk.CTkEntry(
+            self.ToolBarFrame,
+            placeholder_text="Ejemplo: 192.168.0.0"
+        )
+        self.SearchEntry.grid(row=0, column=0, padx=(0, 10), sticky="ew")
+
+        # [ BOTON SCAN ]
+        self.SearchButton = ctk.CTkButton(self.ToolBarFrame, text="B", width=40, height=40)
+        self.SearchButton.grid(row=0, column=1, padx=(0, 10))
+
+        # [ BOTON Settings ]
+        self.SettingsButton = ctk.CTkButton(self.ToolBarFrame,text="S",width=40, height=40)
+        self.SettingsButton.grid(row=0, column=2)
+
+
+
+
+        self.ToolBarFrame.grid_columnconfigure(0, weight=1)
+        self.ToolBarFrame.grid_columnconfigure(1, weight=0)
+        self.ToolBarFrame.grid_columnconfigure(2, weight=0)
 
 
         #=======[ MAP FRAME - MAPA DE NODOS ]=======
 
-        self.MapFrame = customtkinter.CTkFrame(self)
+        self.MapFrame = ctk.CTkFrame(self)
         self.MapFrame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
         # Contenido del Map Frame escalable
@@ -35,7 +58,7 @@ class App(customtkinter.CTk):
 
         #=======[ INFO FRAME - ESCANEO DE PUERTOS ]=======
 
-        self.InfoFrame = customtkinter.CTkScrollableFrame(self)
+        self.InfoFrame = ctk.CTkScrollableFrame(self)
         self.InfoFrame.grid(row=0, column=1, rowspan=2, padx=10, pady=10, sticky="nsew")
 
         # Contenido del Info Frame escalable
