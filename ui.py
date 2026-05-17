@@ -31,31 +31,40 @@ class MapSection(ctk.CTkFrame):
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-        
+
         self.NodoCanvas = ctk.CTkCanvas(self, bg="#2b2b2b", highlightthickness=0)
         self.NodoCanvas.grid(row=0, column=0, sticky="nsew")
 
-        self.NodoCanvas.create_oval(50, 50, 100, 100, fill="#4a90e2", outline="")
-        self.NodoCanvas.create_text(75, 75, text="Nodo 1", fill="white", font=("Arial", 12, "bold"))
+        self.CreateNodo("192.168.0.1", 100, 100)
 
         self.scale = 1.0
 
-        self.NodoCanvas.bind("<MouseWheel>", self.Zoom) 
+        self.NodoCanvas.bind("<MouseWheel>", self.Zoom)
+        self.NodoCanvas.bind("<B1-Motion>", self.MoveCamera)
+        self.NodoCanvas.bind("<ButtonPress-1>", self.StartMove)
+
+    def StartMove(self, event):
+        self.NodoCanvas.scan_mark(event.x, event.y)
 
     def Zoom(self, event):
         factor = 1.1 if event.delta > 0 else 0.9
 
-        self.NodoCanvas.scale("all", event.x, event.y, factor, factor)
+        x = self.NodoCanvas.canvasx(event.x)
+        y = self.NodoCanvas.canvasy(event.y)
+
+        self.NodoCanvas.scale("all", x, y, factor, factor)
+
+        self.scale *= factor  # ahora sí tiene sentido
         self.NodoCanvas.configure(scrollregion=self.NodoCanvas.bbox("all"))
 
-
-    def ApplyZoom(self):
-        self.NodoCanvas.scale("all", 0, 0, self.scale, self.scale)
-
-            
-
-
+    def MoveCamera(self, event):
+        self.NodoCanvas.scan_dragto(event.x, event.y, gain=1)
         
+
+    def CreateNodo(self, ip, x, y):
+        self.NodoCanvas.create_oval(x-25, y-25, x+25, y+25, fill="#54d060", outline="#1f831a", width=3)
+        self.NodoCanvas.create_text(x, y+30, text=ip, fill="white", font=("Arial", 12, "bold"))
+
 
 # ===================== [ INFO SECTION ] =====================
 class InfoSection(ctk.CTkScrollableFrame):
