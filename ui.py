@@ -31,11 +31,31 @@ class MapSection(ctk.CTkFrame):
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        
+        self.NodoCanvas = ctk.CTkCanvas(self, bg="#2b2b2b", highlightthickness=0)
+        self.NodoCanvas.grid(row=0, column=0, sticky="nsew")
 
-        # Aquí luego dibujarás nodos, canvas, etc.
-        self.placeholder = ctk.CTkLabel(self, text="MAPA DE RED")
-        self.placeholder.grid(row=0, column=0)
+        self.NodoCanvas.create_oval(50, 50, 100, 100, fill="#4a90e2", outline="")
+        self.NodoCanvas.create_text(75, 75, text="Nodo 1", fill="white", font=("Arial", 12, "bold"))
 
+        self.scale = 1.0
+
+        self.NodoCanvas.bind("<MouseWheel>", self.Zoom) 
+
+    def Zoom(self, event):
+        factor = 1.1 if event.delta > 0 else 0.9
+
+        self.NodoCanvas.scale("all", event.x, event.y, factor, factor)
+        self.NodoCanvas.configure(scrollregion=self.NodoCanvas.bbox("all"))
+
+
+    def ApplyZoom(self):
+        self.NodoCanvas.scale("all", 0, 0, self.scale, self.scale)
+
+            
+
+
+        
 
 # ===================== [ INFO SECTION ] =====================
 class InfoSection(ctk.CTkScrollableFrame):
